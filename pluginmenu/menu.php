@@ -43,12 +43,9 @@ if (!function_exists('azrcrv_plugin_menu')){
 		
 		echo "<div style='display: block;'><h3>Active Plugins</h3>";
 		echo "<span class='azrcrv-plugin-index'>";
-<<<<<<< HEAD
 		if (is_plugin_active('azrcrv-add-twitter-cards/azrcrv-add-twitter-cards.php')){
-			echo "<a href='admin.php?page=azrcrv-a' class='azrcrv-plugin-index'>Add Twitter Cards</a>";
+			echo "<a href='admin.php?page=azrcrv-atc' class='azrcrv-plugin-index'>Add Twitter Cards</a>";
 		}
-=======
->>>>>>> 15fd8b7735846f34ad9d9dfe8870f7f99e494e57
 		if (is_plugin_active('azrcrv-avatars/azrcrv-avatars.php')){
 			echo "<a href='admin.php?page=azrcrv-a' class='azrcrv-plugin-index'>Avatars</a>";
 		}
@@ -83,13 +80,16 @@ if (!function_exists('azrcrv_plugin_menu')){
 			echo "<a href='admin.php?page=azrcrv-ffi' class='azrcrv-plugin-index'>Floating Featured Image</a>";
 		}
 		if (is_plugin_active('azrcrv-icons/azrcrv-icons.php')){
-			echo "<a href='admin.php?page=azrcrv-f' class='azrcrv-plugin-index'>Icons</a>";
+			echo "<a href='admin.php?page=azrcrv-i' class='azrcrv-plugin-index'>Icons</a>";
 		}
 		if (is_plugin_active('azrcrv-images/azrcrv-images.php')){
 			echo "<a href='admin.php?page=azrcrv-im' class='azrcrv-plugin-index'>Images</a>";
 		}
 		if (is_plugin_active('azrcrv-insult-generator/azrcrv-insult-generator.php')){
 			echo "<a href='admin.php?page=azrcrv-ig' class='azrcrv-plugin-index'>Insult Generator</a>";
+		}
+		if (is_plugin_active('azrcrv-loop-advert-injection/azrcrv-loop-advert-injection.php')){
+			echo "<a href='admin.php?page=azrcrv-lai' class='azrcrv-plugin-index'>Loop Advert Injection</a>";
 		}
 		if (is_plugin_active('azrcrv-mobile-detection/azrcrv-mobile-detection.php')){
 			echo "<a href='admin.php?page=azrcrv-md' class='azrcrv-plugin-index'>Mobile Detection</a>";
@@ -121,12 +121,9 @@ if (!function_exists('azrcrv_plugin_menu')){
 		if (is_plugin_active('azrcrv-sidebar-login/azrcrv-sidebar-login.php')){
 			echo "<a href='admin.php?page=azrcrv-sl' class='azrcrv-plugin-index'>Sidebar Login</a>";
 		}
-<<<<<<< HEAD
 		if (is_plugin_active('azrcrv-snippets/azrcrv-snippets.php')){
-			echo "<a href='admin.php?page=azrcrv-sl' class='azrcrv-plugin-index'>Snippets</a>";
+			echo "<a href='admin.php?page=azrcrv-s' class='azrcrv-plugin-index'>Snippets</a>";
 		}
-=======
->>>>>>> 15fd8b7735846f34ad9d9dfe8870f7f99e494e57
 		if (is_plugin_active('azrcrv-tag-cloud/azrcrv-tag-cloud.php')){
 			echo "<a href='admin.php?page=azrcrv-tc' class='azrcrv-plugin-index'>Tag Cloud</a>";
 		}
@@ -151,19 +148,16 @@ if (!function_exists('azrcrv_plugin_menu')){
 		echo "<div style='display: block;'><h3>Other Available Plugins</h3>";
 		echo "<span class='azrcrv-plugin-index'>";
 		$countofplugins = 0;
-<<<<<<< HEAD
 		if (!is_plugin_active('azrcrv-add-twitter-cards/azrcrv-add-twitter-cards.php')){
 			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/add-twitter-cards/' class='azrcrv-plugin-index'>Add Twitter Cards</a>";
 			$countofplugins += 1;
 		}
-=======
->>>>>>> 15fd8b7735846f34ad9d9dfe8870f7f99e494e57
 		if (!is_plugin_active('azrcrv-avatars/azrcrv-avatars.php')){
 			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/avatars/' class='azrcrv-plugin-index'>Avatars</a>";
 			$countofplugins += 1;
 		}
 		if (!is_plugin_active('azrcrv-bbcode/azrcrv-bbcode.php')){
-			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/bb-code/' class='azrcrv-plugin-index'>BBCode</a>";
+			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/bbcode/' class='azrcrv-plugin-index'>BBCode</a>";
 			$countofplugins += 1;
 		}
 		if (!is_plugin_active('azrcrv-breadcrumbs/azrcrv-breadcrumbs.php')){
@@ -214,6 +208,10 @@ if (!function_exists('azrcrv_plugin_menu')){
 			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/insult-generator/' class='azrcrv-plugin-index'>Insult Generator</a>";
 			$countofplugins += 1;
 		}
+		if (!is_plugin_active('azrcrv-loop-advert-injection/azrcrv-loop-advert-injection.php')){
+			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/loop-advert-injection/' class='azrcrv-plugin-index'>Loop Advert Injection</a>";
+			$countofplugins += 1;
+		}
 		if (!is_plugin_active('azrcrv-mobile-detection/azrcrv-mobile-detection.php')){
 			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/mobile-detection/' class='azrcrv-plugin-index'>Mobile Detection</a>";
 			$countofplugins += 1;
@@ -254,13 +252,10 @@ if (!function_exists('azrcrv_plugin_menu')){
 			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/sidebar-login/' class='azrcrv-plugin-index'>Sidebar Login</a>";
 			$countofplugins += 1;
 		}
-<<<<<<< HEAD
 		if (!is_plugin_active('azrcrv-snippets/azrcrv-snippets.php')){
 			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/snippets/' class='azrcrv-plugin-index'>Snippets</a>";
 			$countofplugins += 1;
 		}
-=======
->>>>>>> 15fd8b7735846f34ad9d9dfe8870f7f99e494e57
 		if (!is_plugin_active('azrcrv-tag-cloud/azrcrv-tag-cloud.php')){
 			echo "<a href='https://development.azurecurve.co.uk/classicpress-plugins/tag-cloud/' class='azrcrv-plugin-index'>Tag Cloud</a>";
 			$countofplugins += 1;
