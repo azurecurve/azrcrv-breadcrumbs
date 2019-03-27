@@ -23,7 +23,7 @@ Shortcode usage is [getbreadcrumbs=arrow] or [getbreadcrumbs=text] to choose bet
 
 The plugin supports both text based and arrow breadcrumbs; styles maintainable via the admin console.
 
-azc_b_getbreadcrumbs function maintained for backward compatibility.
+Backward compatibility for those migrating from WordPress to ClassicPress has been maintained by retaining the azc_b_getbreadcrumbs function.
 
 == Installation ==
 To install the Breadcrumbs plugin:
