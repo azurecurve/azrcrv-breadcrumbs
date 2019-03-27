@@ -35,14 +35,7 @@ To install the Breadcrumbs plugin:
 == Changelog ==
 Changes and feature additions for the Breadcrumbs plugin:
 = 1.0.0 =
-* First version for ClassicPress forked from azurecurve Breadcrumbs WordPress Plugin and converted to OOP.
-
-== Frequently Asked Questions ==
-= Can I translate this plugin? =
-* Yes, the .pot fie is in the plugins languages folder and can also be downloaded from the plugin page on https://development.azurecurve.co.uk/; if you do translate this plugin, please sent the .po and .mo files to translations@azurecurve.co.uk for inclusion in the next version (full credit will be given).
-Changes and feature additions for the Icons plugin:
-= 1.0.0 =
-* First version for ClassicPress forked from azurecurve RSS Suffix WordPress Plugin.
+* First version for ClassicPress forked from azurecurve Breadcrumbs WordPress Plugin.
 
 == Frequently Asked Questions ==
 = Can I translate this plugin? =
