@@ -36,7 +36,6 @@ To install the Breadcrumbs plugin:
 Changes and feature additions for the Breadcrumbs plugin:
 = 1.1.0 =
 * Add functionality to allow breadcrumbs on post archives.
-= 1.0.2 =
 * Correct issue with localized strings on admin page.
 = 1.0.1 =
 * Update azurecurve menu for easier maintenance.
