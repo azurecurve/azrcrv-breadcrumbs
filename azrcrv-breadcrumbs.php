@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: Breadcrumbs
  * Description: Provides opposite rss feed to that configured in ClassicPress
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs
@@ -122,6 +122,9 @@ function azrcrv_b_generate_page_breadcrumbs($id, $type){
  *
  */
 function azrcrv_b_generate_breadcrumbs($id, $type){
+	
+	$id = azrcrv_b_get_the_ID($id);
+	
 	$options = get_option('azrcrv-b');
 	
 	$breadcrumbs = '';
@@ -134,30 +137,62 @@ function azrcrv_b_generate_breadcrumbs($id, $type){
 			$type = 'text';
 			$breadcrumbseparator = ' '.$options['breadcrumb-separator'].' ';
 		}
-
-		$post = get_post($id);
-		$title = $post->post_title;
-		
-		$parents = array();
-		$parents = azrcrv_b_get_parents($id, $parents);
-		
+			
 		$pageurl = trailingslashit(get_site_url());
 		
-		if ($options['add-homepage'] == 1){
-			$breadcrumbs .= '<a href="'.$pageurl.'" class="azrcrv-b-'.$type.'breadcrumbs">'. get_bloginfo('name').'</a>'.$breadcrumbseparator;
-		}
-		$link = '';
-		foreach (array_reverse($parents) as $key => $value){
-		//for ($i = count($parents); $i = 0; $i--){
-			$link .= $value["name"].'/';
-			$breadcrumbs .= '<a href="'.get_the_permalink($value["parentid"]).'" class="azrcrv-b-'.$type.'breadcrumbs">'.$value['title'].'</a>'.$breadcrumbseparator;
-		}
-		if ($type == 'arrow'){
-			$breadcrumbs .= '<span class="azrcrv-b-arrowbreadcrumbs">'.$title.'</span>';
+		if (substr($id, 0, 3) == 'cat'){
+			// categories
+			$cat_id = substr($id,4,99);
+			$cat_name = get_cat_name($cat_id);
+			$title = $cat_name;
+			$parents = get_category_parents($cat_id, false, ',');
+			//echo $parents;
+			$parents = explode(',', $parents);
+			
+			if ($options['add-homepage'] == 1){
+				$breadcrumbs .= '<a href="'.$pageurl.'" class="azrcrv-b-'.$type.'breadcrumbs">'. get_bloginfo('name').'</a>'.$breadcrumbseparator;
+			}
+			
+			foreach ($parents as $parent){
+				if (strlen($parent) > 0 AND $parent <> $cat_name){
+					$category_id = get_cat_ID( $parent );
+					$category_link = get_category_link( $category_id );
+					$breadcrumbs .= '<a href="'.$category_link.'" class="azrcrv-b-'.$type.'breadcrumbs">'.$parent.'</a>'.$breadcrumbseparator;
+				}
+			}
+			if ($type == 'arrow'){
+				$breadcrumbs .= '<span class="azrcrv-b-arrowbreadcrumbs">'.$title.'</span>';
+			}else{
+				$breadcrumbs .= $title;
+			}
+			
+			$breadcrumbs = "<div class='azrcrv-b-arrowbreadcrumbscontainer'><div class='azrcrv-b-".$type."breadcrumbs'>".$breadcrumbs."</div></div>";
 		}else{
-			$breadcrumbs .= $title;
+			// everything else
+			$post = get_post($id);
+			$title = $post->post_title;
+			
+			$parents = array();
+			$parents = azrcrv_b_get_parents($id, $parents);
+			
+			if ($options['add-homepage'] == 1 AND is_front_page()){
+				$title = get_bloginfo('name');
+			}else{
+				$breadcrumbs .= '<a href="'.$pageurl.'" class="azrcrv-b-'.$type.'breadcrumbs">'. get_bloginfo('name').'</a>'.$breadcrumbseparator;
+			}
+			$link = '';
+			foreach (array_reverse($parents) as $key => $value){
+			//for ($i = count($parents); $i = 0; $i--){
+				$link .= $value["name"].'/';
+				$breadcrumbs .= '<a href="'.get_the_permalink($value["parentid"]).'" class="azrcrv-b-'.$type.'breadcrumbs">'.$value['title'].'</a>'.$breadcrumbseparator;
+			}
+			if ($type == 'arrow'){
+				$breadcrumbs .= '<span class="azrcrv-b-arrowbreadcrumbs">'.$title.'</span>';
+			}else{
+				$breadcrumbs .= $title;
+			}
+			$breadcrumbs = "<div class='azrcrv-b-arrowbreadcrumbscontainer'><div class='azrcrv-b-".$type."breadcrumbs'>".$breadcrumbs."</div></div>";
 		}
-		$breadcrumbs = "<div class='azrcrv-b-arrowbreadcrumbscontainer'><div class='azrcrv-b-".$type."breadcrumbs'>".$breadcrumbs."</div></div>";
 	}
 	
 	return $breadcrumbs;
@@ -464,10 +499,10 @@ function azrcrv_b_settings(){
 					<textarea name="style-arrow" rows="40" cols="80" id="style" class="large-text code"><?php echo esc_textarea(stripslashes($options['style-arrow'])) ?></textarea>
 				</td></tr>
 				<tr><th scope="row"><label for="shortcode"><?php esc_html_e('Shortcode', 'breadcrumbs'); ?></label></th><td>
-					<?php esc_html_e(sprintf('%s can be added anywhere to place breadcrumbs in desired location.', "<strong>[getbreadcrumbs=arrow]</strong>"), 'breadcrumbs'); ?>
+					<?php printf(esc_html__('%s can be added anywhere to place breadcrumbs in desired location.', 'breadcrumbs'), "<strong>[getbreadcrumbs=arrow]</strong>"); ?>
 				</td></tr>
 				<tr><th scope="row"><label for="function"><?php esc_html_e('Function', 'breadcrumbs'); ?></label></th><td>
-					<?php esc_html_e(sprintf('%s can be added to a theme to place breadcrumbs in desired location; exists syntax prevents errors if plugin deactivated.', "<strong>if (function_exists(getbreadcrumbs)){ echo getbreadcrumbs('arrow'); }</strong>"), 'breadcrumbs'); ?>
+					<?php printf(esc_html__('%s can be added to a theme to place breadcrumbs in desired location; exists syntax prevents errors if plugin deactivated.', 'breadcrumbs'), "<strong>if (function_exists(getbreadcrumbs)){ echo getbreadcrumbs('arrow'); }</strong>"); ?>
 				</td></tr>
 				</table>
 				<input type="submit" value="Save Changes" class="button-primary"/>
@@ -560,6 +595,24 @@ function getbreadcrumbs($type){
  */
 function azc_b_getbreadcrumbs($type){
 	echo azrcrv_b_generate_breadcrumbs(get_the_ID(), $type);
+}
+
+/**
+ * old function to get breadcrumbs including for backward compatibility
+ *
+ * @since 1.0.0
+ *
+ */
+function azrcrv_b_get_the_ID($id) {
+	if (in_the_loop()) {
+		$post_id = $id;
+	} else {
+		$post_id = get_queried_object_id() == 0 ? 999999999999 :get_queried_object_id();
+		if (is_category()){
+			$post_id = 'cat='.$post_id;
+		}
+	}
+	return $post_id;
 }
 
 ?>
