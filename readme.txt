@@ -34,6 +34,8 @@ To install the Breadcrumbs plugin:
 
 == Changelog ==
 Changes and feature additions for the Breadcrumbs plugin:
+= 1.1.1 =
+* Fix bug with display of breadcrumbs on post archives.
 = 1.1.0 =
 * Add functionality to allow breadcrumbs on post archives.
 * Correct issue with localized strings on admin page.
