@@ -2,8 +2,8 @@
 /**
  * ------------------------------------------------------------------------------
  * Plugin Name: Breadcrumbs
- * Description: Provides opposite rss feed to that configured in ClassicPress
- * Version: 1.1.1
+ * Description: Create breadcrumbs trail for posts, pages and other post types.
+ * Version: 1.2.0
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs
@@ -24,6 +24,10 @@ if (!defined('ABSPATH')){
 
 // include plugin menu
 require_once(dirname( __FILE__).'/pluginmenu/menu.php');
+register_activation_hook(__FILE__, 'azrcrv_create_plugin_menu_b');
+
+// include update client
+require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php');
 
 /**
  * Setup actions, shortcodes and filters.
@@ -35,6 +39,7 @@ require_once(dirname( __FILE__).'/pluginmenu/menu.php');
 add_action('admin_post_azrcrv_b_save_options', 'azrcrv_b_process_options');
 add_action('wp_enqueue_scripts', 'azrcrv_b_add_inline_css');
 add_action('admin_menu', 'azrcrv_b_create_admin_menu');
+add_action('plugins_loaded', 'azrcrv_b_load_languages');
 
 // add shortcodes
 add_shortcode('getbreadcrumbs', 'azrcrv_b_shortcode_get_breadcrumbs');
@@ -48,6 +53,17 @@ add_filter('plugin_action_links', 'azrcrv_b_add_plugin_action_link', 10, 2);
 
 // register activation hook
 register_activation_hook(__FILE__, 'azrcrv_b_set_default_options');
+
+/**
+ * Load language files.
+ *
+ * @since 1.0.0
+ *
+ */
+function azrcrv_b_load_languages() {
+    $plugin_rel_path = basename(dirname(__FILE__)).'/languages';
+    load_plugin_textdomain('azrcrv-b', false, $plugin_rel_path);
+}
 
 /**
  * Shortcode to return breadcrumbs
@@ -432,7 +448,7 @@ function azrcrv_b_settings(){
 	?>
 	<div id="azrcrv-b-general" class="wrap">
 		<fieldset>
-			<h2><?php echo esc_html(get_admin_page_title()); ?></h2>
+			<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 			<?php if(isset($_GET['settings-updated'])){ ?>
 				<div class="notice notice-success is-dismissible">
 					<p><strong><?php esc_html_e('Settings have been saved.', 'breadcrumbs') ?></strong></p>
