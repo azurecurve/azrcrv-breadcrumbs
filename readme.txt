@@ -1,7 +1,7 @@
 === Breadcrumbs ===
 
 Description:	Allows breadcrumbs to be placed before and after the content on a post, page or other post type.
-Version:		1.2.0
+Version:		1.2.1
 Tags:			breadcrumbs
 Author:			azurecurve
 Author URI:		https://development.azurecurve.co.uk/
@@ -58,6 +58,9 @@ This plugin is developed for ClassicPress, but will likely work on WordPress.
 == Changelog ==
 
 # Changelog
+
+### [Version 1.2.1](https://github.com/azurecurve/azrcrv-display-after-post-content/tree/v1.2.1)
+ * Fix bug with incorrect language load text domain.
 
 ### [Version 1.2.0](https://github.com/azurecurve/azrcrv-breadcrumbs/tree/v1.2.0)
  * Add integration with Update Manager for automatic updates.
