@@ -24,7 +24,7 @@ if (!defined('ABSPATH')){
 
 // include plugin menu
 require_once(dirname( __FILE__).'/pluginmenu/menu.php');
-register_activation_hook(__FILE__, 'azrcrv_create_plugin_menu_b');
+add_action('admin_init', 'azrcrv_create_plugin_menu_b');
 
 // include update client
 require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php');
@@ -36,6 +36,7 @@ require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php')
  *
  */
 // add actions
+add_action('admin_init', 'azrcrv_b_set_default_options');
 add_action('admin_post_azrcrv_b_save_options', 'azrcrv_b_process_options');
 add_action('wp_enqueue_scripts', 'azrcrv_b_add_inline_css');
 add_action('admin_menu', 'azrcrv_b_create_admin_menu');
@@ -50,9 +51,6 @@ add_shortcode('GETBREADCRUMBS', 'azrcrv_b_shortcode_get_breadcrumbs');
 add_filter('the_content', 'azrcrv_b_display_breadcrumbs_before_content');
 add_filter('the_content', 'azrcrv_b_display_breadcrumbs_after_content');
 add_filter('plugin_action_links', 'azrcrv_b_add_plugin_action_link', 10, 2);
-
-// register activation hook
-register_activation_hook(__FILE__, 'azrcrv_b_set_default_options');
 
 /**
  * Load language files.
@@ -242,6 +240,9 @@ function azrcrv_b_get_parents($id, $array){
  *
  */
 function azrcrv_b_set_default_options($networkwide){
+	
+	$option_name = 'azrcrv-b';
+	$old_option_name = 'azc-b';
 
 	$new_options = array(
 				'add-homepage' => 1,
@@ -337,6 +338,7 @@ div.azrcrv-b-arrowbreadcrumbs a:not(:first-child):not(:last-child):hover{
 	background: #007FFF;
 	color: #FFF;
 }",
+						'updated' => strtotime('2020-04-04'),
 			);
 	
 	// set defaults for multi-site
@@ -350,44 +352,72 @@ div.azrcrv-b-arrowbreadcrumbs a:not(:first-child):not(:last-child):hover{
 
 			foreach ($blog_ids as $blog_id){
 				switch_to_blog($blog_id);
-
-				if (get_option('azrcrv-b') === false){
-					if (get_option('azc-b') === false){
-						add_option('azrcrv-b', $new_options);
-					}else{
-						add_option('azrcrv-b', get_option('azc-b'));
-					}
-				}
+				
+				azrcrv_b_update_options($option_name, $new_options, false);
 			}
 
 			switch_to_blog($original_blog_id);
 		}else{
-			if (get_option('azrcrv-b') === false){
-				if (get_option('azc-b') === false){
-					add_option('azrcrv-b', $new_options);
-				}else{
-					add_option('azrcrv-b', get_option('azc-b'));
-				}
-			}
+			azrcrv_b_update_options( $option_name, $new_options, false);
 		}
-		if (get_site_option('azrcrv-b') === false){
-				if (get_option('azc-b') === false){
-					add_option('azrcrv-b', $new_options);
-				}else{
-					add_option('azrcrv-b', get_option('azc-b'));
-				}
+		if (get_site_option($option_name) === false){
+			azrcrv_b_update_options($option_name, $new_options, true);
 		}
 	}
 	//set defaults for single site
 	else{
-		if (get_option('azrcrv-b') === false){
-				if (get_option('azc-b') === false){
-					add_option('azrcrv-b', $new_options);
-				}else{
-					add_option('azrcrv-b', get_option('azc-b'));
-				}
+		azrcrv_b_update_options($option_name, $new_options, false);
+	}
+}
+
+/**
+ * Update options.
+ *
+ * @since 1.1.3
+ *
+ */
+function azrcrv_b_update_options($option_name, $new_options, $is_network_site){
+	if ($is_network_site == true){
+		if (get_site_option($option_name) === false){
+			add_site_option($option_name, $new_options);
+		}else{
+			$options = get_site_option($option_name);
+			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
+				$options['updated'] = $new_options['updated'];
+				update_site_option($option_name, azrcrv_b_update_default_options($options, $new_options));
+			}
+		}
+	}else{
+		if (get_option($option_name) === false){
+			add_option($option_name, $new_options);
+		}else{
+			$options = get_option($option_name);
+			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
+				$options['updated'] = $new_options['updated'];
+				update_option($option_name, azrcrv_b_update_default_options($options, $new_options));
+			}
 		}
 	}
+}
+
+/**
+ * Add default options to existing options.
+ *
+ * @since 1.1.3
+ *
+ */
+function azrcrv_b_update_default_options( &$default_options, $current_options ) {
+    $default_options = (array) $default_options;
+    $current_options = (array) $current_options;
+    $updated_options = $current_options;
+    foreach ($default_options as $key => &$value) {
+        if (is_array( $value) && isset( $updated_options[$key])){
+            $updated_options[$key] = azrcrv_b_update_default_options($value, $updated_options[$key]);
+        } else {
+			$updated_options[$key] = $value;
+        }
+    }
+    return $updated_options;
 }
 
 /**
