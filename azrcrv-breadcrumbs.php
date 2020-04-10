@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: Breadcrumbs
  * Description: Create breadcrumbs trail for posts, pages and other post types.
- * Version: 1.2.3
+ * Version: 1.2.5
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs/
@@ -153,7 +153,9 @@ function azrcrv_b_generate_breadcrumbs($id, $type){
 		}
 		
 		$post = get_post($id);
-		$title = $post->post_title;
+		if (isset($post)){
+			$title = $post->post_title;
+		}
 		$pageurl = trailingslashit(get_site_url());
 		
 		if ($options['add-homepage'] == 1 AND is_front_page()){
