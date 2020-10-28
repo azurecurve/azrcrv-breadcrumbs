@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: Breadcrumbs
  * Description: Create breadcrumbs trail for posts, pages and other post types.
- * Version: 1.2.5
+ * Version: 1.3.0
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs/
@@ -36,7 +36,6 @@ require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php')
  *
  */
 // add actions
-add_action('admin_init', 'azrcrv_b_set_default_options');
 add_action('admin_post_azrcrv_b_save_options', 'azrcrv_b_process_options');
 add_action('wp_enqueue_scripts', 'azrcrv_b_add_inline_css');
 add_action('admin_menu', 'azrcrv_b_create_admin_menu');
@@ -51,6 +50,8 @@ add_shortcode('GETBREADCRUMBS', 'azrcrv_b_shortcode_get_breadcrumbs');
 add_filter('the_content', 'azrcrv_b_display_breadcrumbs_before_content');
 add_filter('the_content', 'azrcrv_b_display_breadcrumbs_after_content');
 add_filter('plugin_action_links', 'azrcrv_b_add_plugin_action_link', 10, 2);
+add_filter('codepotent_update_manager_image_path', 'azrcrv_b_custom_image_path');
+add_filter('codepotent_update_manager_image_url', 'azrcrv_b_custom_image_url');
 
 /**
  * Load language files.
@@ -86,7 +87,7 @@ function azrcrv_b_shortcode_get_breadcrumbs($atts, $content = null){
  *
  */
 function azrcrv_b_display_breadcrumbs_before_content($content){
-	$options = get_option('azrcrv-b');
+	$options = azrcrv_b_get_option('azrcrv-b');
 	
 	if ($options['page-before'] != 'none'){
 		return azrcrv_b_generate_page_breadcrumbs(get_the_ID(), $options['page-before']).$content;
@@ -102,7 +103,7 @@ function azrcrv_b_display_breadcrumbs_before_content($content){
  *
  */
 function azrcrv_b_display_breadcrumbs_after_content($content){
-	$options = get_option('azrcrv-b');
+	$options = azrcrv_b_get_option('azrcrv-b');
 	
 	if ($options['page-after'] != 'none'){
 		return $content.azrcrv_b_generate_page_breadcrumbs(get_the_ID(), $options['page-after']);
@@ -118,7 +119,7 @@ function azrcrv_b_display_breadcrumbs_after_content($content){
  *
  */
 function azrcrv_b_generate_page_breadcrumbs($id, $type){
-	$options = get_option('azrcrv-b');
+	$options = azrcrv_b_get_option('azrcrv-b');
 	
 	$breadcrumbs = '';
 	if (is_page($id) AND in_the_loop($id)){
@@ -139,7 +140,7 @@ function azrcrv_b_generate_breadcrumbs($id, $type){
 	
 	$id = azrcrv_b_get_the_ID($id);
 	
-	$options = get_option('azrcrv-b');
+	$options = azrcrv_b_get_option('azrcrv-b');
 	
 	$breadcrumbs = '';
 	
@@ -214,7 +215,7 @@ function azrcrv_b_add_inline_css(){
 	
 	wp_enqueue_style('azrcrv_b', plugins_url('assets/css/style.css', __FILE__));
 	
-	$options = get_option('azrcrv-b');
+	$options = azrcrv_b_get_option('azrcrv-b');
 		
 	wp_add_inline_style('azrcrv_b', stripslashes($options['style-text']).stripslashes($options['style-arrow']));
 }
@@ -236,20 +237,43 @@ function azrcrv_b_get_parents($id, $array){
 }
 
 /**
- * Set default options
+ * Custom plugin image path.
  *
- * @since 1.0.0
+ * @since 1.3.0
  *
  */
-function azrcrv_b_set_default_options($networkwide){
-	
-	$option_name = 'azrcrv-b';
-	$old_option_name = 'azc-b';
+function azrcrv_b_custom_image_path($path){
+    if (strpos($path, 'azrcrv-add-twitter-card') !== false){
+        $path = plugin_dir_path(__FILE__).'assets/pluginimages';
+    }
+    return $path;
+}
 
-	$new_options = array(
+/**
+ * Custom plugin image url.
+ *
+ * @since 1.3.0
+ *
+ */
+function azrcrv_b_custom_image_url($url){
+    if (strpos($url, 'azrcrv-add-twitter-card') !== false){
+        $url = plugin_dir_url(__FILE__).'assets/pluginimages';
+    }
+    return $url;
+}
+
+/**
+ * Get options including defaults.
+ *
+ * @since 1.3.0
+ *
+ */
+function azrcrv_b_get_option($option_name){
+ 
+	$defaults = array(
 				'add-homepage' => 1,
-				'show-homepage' => 0,
-				'page-before' => 'none',
+				'show-on-homepage' => 0,
+				'page-before' => 'arrow',
 				'page-after' => 'arrow',
 				'breadcrumb-separator' => '&raquo;',
 				'style-text' => "div.azrcrv-b-textbreadcrumbs {
@@ -340,87 +364,15 @@ div.azrcrv-b-arrowbreadcrumbs a:not(:first-child):not(:last-child):hover{
 	background: #007FFF;
 	color: #FFF;
 }",
-						'updated' => strtotime('2020-04-04'),
-			);
-	
-	// set defaults for multi-site
-	if (function_exists('is_multisite') && is_multisite()){
-		// check if it is a network activation - if so, run the activation function for each blog id
-		if ($networkwide){
-			global $wpdb;
+					);
 
-			$blog_ids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
-			$original_blog_id = get_current_blog_id();
+	$options = get_option($option_name, $defaults);
 
-			foreach ($blog_ids as $blog_id){
-				switch_to_blog($blog_id);
-				
-				azrcrv_b_update_options($option_name, $new_options, false);
-			}
+	$options = wp_parse_args($options, $defaults);
 
-			switch_to_blog($original_blog_id);
-		}else{
-			azrcrv_b_update_options( $option_name, $new_options, false);
-		}
-		if (get_site_option($option_name) === false){
-			azrcrv_b_update_options($option_name, $new_options, true);
-		}
-	}
-	//set defaults for single site
-	else{
-		azrcrv_b_update_options($option_name, $new_options, false);
-	}
-}
+	return $options;
 
-/**
- * Update options.
- *
- * @since 1.1.3
- *
- */
-function azrcrv_b_update_options($option_name, $new_options, $is_network_site){
-	if ($is_network_site == true){
-		if (get_site_option($option_name) === false){
-			add_site_option($option_name, $new_options);
-		}else{
-			$options = get_site_option($option_name);
-			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
-				$options['updated'] = $new_options['updated'];
-				update_site_option($option_name, azrcrv_b_update_default_options($options, $new_options));
-			}
-		}
-	}else{
-		if (get_option($option_name) === false){
-			add_option($option_name, $new_options);
-		}else{
-			$options = get_option($option_name);
-			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
-				$options['updated'] = $new_options['updated'];
-				update_option($option_name, azrcrv_b_update_default_options($options, $new_options));
-			}
-		}
-	}
-}
-
-/**
- * Add default options to existing options.
- *
- * @since 1.1.3
- *
- */
-function azrcrv_b_update_default_options( &$default_options, $current_options ) {
-    $default_options = (array) $default_options;
-    $current_options = (array) $current_options;
-    $updated_options = $current_options;
-    foreach ($default_options as $key => &$value) {
-        if (is_array( $value) && isset( $updated_options[$key])){
-            $updated_options[$key] = azrcrv_b_update_default_options($value, $updated_options[$key]);
-        } else {
-			$updated_options[$key] = $value;
-        }
-    }
-    return $updated_options;
-}
+ }
 
 /**
  * Add Breadcrumbs action link on plugins page.
@@ -436,7 +388,7 @@ function azrcrv_b_add_plugin_action_link($links, $file){
 	}
 
 	if ($file == $this_plugin){
-		$settings_link = '<a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=azrcrv-b"><img src="'.plugins_url('/pluginmenu/images/Favicon-16x16.png', __FILE__).'" style="padding-top: 2px; margin-right: -5px; height: 16px; width: 16px;" alt="azurecurve" />'.esc_html__('Settings' ,'breadcrumbs').'</a>';
+		$settings_link = '<a href="'.admin_url('admin.php?page=azrcrv-b').'"><img src="'.plugins_url('/pluginmenu/images/Favicon-16x16.png', __FILE__).'" style="padding-top: 2px; margin-right: -5px; height: 16px; width: 16px;" alt="azurecurve" />'.esc_html__('Settings' ,'breadcrumbs').'</a>';
 		array_unshift($links, $settings_link);
 	}
 
@@ -475,7 +427,7 @@ function azrcrv_b_settings(){
 	}
 	
 	// Retrieve plugin configuration options from database
-	$options = get_option('azrcrv-b');
+	$options = azrcrv_b_get_option('azrcrv-b');
 	
 	?>
 	<div id="azrcrv-b-general" class="wrap">
