@@ -1,12 +1,12 @@
 === Breadcrumbs ===
 
 Description:	Allows breadcrumbs to be placed before and after the content on a post, page or other post type.
-Version:		1.3.1
+Version:		1.3.2
 Tags:			breadcrumbs
 Author:			azurecurve
 Author URI:		https://development.azurecurve.co.uk/
 Plugin URI:		https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs/
-Download link:	https://github.com/azurecurve/azrcrv-breadcrumbs/releases/download/v1.3.1/azrcrv-breadcrumbs.zip
+Download link:	https://github.com/azurecurve/azrcrv-breadcrumbs/releases/download/v1.3.2/azrcrv-breadcrumbs.zip
 Donate link:	https://development.azurecurve.co.uk/support-development/
 Requires PHP:	5.6
 Requires:		1.0.0
@@ -59,6 +59,9 @@ This plugin is developed for ClassicPress, but will likely work on WordPress.
 
 # Changelog
 
+### [Version 1.3.2](https://github.com/azurecurve/azrcrv-breadcrumbs/releases/tag/v1.3.2)
+ * Update azurecurve menu and logo.
+ 
 ### [Version 1.3.1](https://github.com/azurecurve/azrcrv-breadcrumbs/releases/tag/v1.3.1)
  * Fix problem with load of plugin icon and banner.
 
