@@ -1,14 +1,18 @@
 <?php
 /**
  * ------------------------------------------------------------------------------
- * Plugin Name: Breadcrumbs
- * Description: Create breadcrumbs trail for posts, pages and other post types.
- * Version: 1.3.5
- * Author: azurecurve
- * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
- * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs/
- * Text Domain: breadcrumbs
- * Domain Path: /languages
+ * Plugin Name:		Breadcrumbs
+ * Description:		Create breadcrumbs trail for posts, pages and other post types.
+ * Version:			1.3.6
+ * Requires CP:		1.0
+ * Author:			azurecurve
+ * Author URI:		https://development.azurecurve.co.uk/classicpress-plugins/
+ * Plugin URI:		https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs/
+ * Donate link:		https://development.azurecurve.co.uk/support-development/
+ * Text Domain:		breadcrumbs
+ * Domain Path:		/languages
+ * License:			GPLv2 or later
+ * License URI:		http://www.gnu.org/licenses/gpl-2.0.html
  * ------------------------------------------------------------------------------
  * This is free software released under the terms of the General Public License,
  * version 2, or later. It is distributed WITHOUT ANY WARRANTY; without even the
