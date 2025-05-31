@@ -3,8 +3,9 @@
  * ------------------------------------------------------------------------------
  * Plugin Name:		Breadcrumbs
  * Description:		Create breadcrumbs trail for posts, pages and other post types.
- * Version:			1.3.6
+ * Version:			1.3.7
  * Requires CP:		1.0
+ * Requires PHP:	7.4
  * Author:			azurecurve
  * Author URI:		https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI:		https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs/
