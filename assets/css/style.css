@@ -1,0 +1,108 @@
+/*
+	Breadcrumbs - public-facing stylesheet.
+
+	As of 2.0.0 this replaces the "Style for text breadcrumbs" / "Style for
+	arrow breadcrumbs" textareas previously found on the Settings tab -
+	those admin-editable CSS blocks (stored in the database and injected via
+	wp_add_inline_style()) have been removed entirely; see PRD.md s7/s9.
+
+	The rules below are unchanged from the plugin's previous built-in
+	defaults - only how they're delivered has changed. To customise
+	breadcrumb appearance, target these same classes from your theme or
+	child theme's own stylesheet (loaded after this one, or with a higher
+	specificity/!important as needed).
+*/
+
+/* text breadcrumbs
+----------------------------------------------- */
+div.azrcrv-b-textbreadcrumbs {
+	font-size: 12px;
+	color: grey;
+	font-weight: 550;
+	padding: 9px 0 9px 0;
+}
+a.azrcrv-b-textbreadcrumbs {
+	color: grey !important;
+	font-weight: 550;
+	text-decoration: none;
+}
+a.azrcrv-b-textbreadcrumbs:hover {
+	color: #007FFF !important;
+	text-decoration: underline;
+}
+
+/* arrow breadcrumbs
+----------------------------------------------- */
+div.azrcrv-b-arrowbreadcrumbscontainer {
+	display: block;
+	width: 100%;
+}
+div.azrcrv-b-arrowbreadcrumbs {
+	display: inline-block;
+	border: 1px solid #007FFF;
+	overflow: hidden;
+	border-radius: 5px;
+}
+div.azrcrv-b-arrowbreadcrumbs a, span.azrcrv-b-arrowbreadcrumbs {
+	text-decoration: none;
+	outline: none;
+	display: block;
+	float: left;
+	font-size: 12px;
+	line-height: 20px;
+	/* need more margin on the left of links to accommodate the numbers */
+	padding: 0 10px 0 20px;
+	position: relative;
+}
+div.azrcrv-b-arrowbreadcrumbs a {
+	color: #007FFF;
+	font-weight: 550;
+}
+span.azrcrv-b-arrowbreadcrumbs {
+	color: #007FFF;
+}
+/* since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links */
+div.azrcrv-b-arrowbreadcrumbs a:first-child {
+	border-radius: 5px 0 0 5px; /* to match with the parent's radius */
+	padding-left: 10px;
+	color: #007FFF;
+}
+div.azrcrv-b-arrowbreadcrumbs a:last-child {
+	border-radius: 0 5px 5px 0; /* this was to prevent glitches on hover */
+	padding-right: 20px;
+	color: #007FFF;
+}
+div.azrcrv-b-arrowbreadcrumbs a:not(:first-child):not(:last-child) {
+	color: #007FFF;
+}
+
+/* adding the arrows for the azrcrv-b-arrowbreadcrumbs using rotated pseudo elements */
+div.azrcrv-b-arrowbreadcrumbs a:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	/* half of square's length */
+	right: -10px;
+	/* same dimension as the line-height of div.azrcrv-b-arrowbreadcrumbs a */
+	width: 20px;
+	height: 20px;
+	transform: scale(0.707) rotate(45deg);
+	/* we need to prevent the arrows from getting buried under the next link */
+	z-index: 1;
+	/* stylish arrow design using box shadow */
+	box-shadow:
+		2px -2px 0 2px #007FFF,
+		3px -3px 0 2px #007FFF;
+	border-radius: 0 5px 0 50px;
+}
+
+div.azrcrv-b-arrowbreadcrumbs a, div.azrcrv-b-arrowbreadcrumbs a:after {
+	background: #FFF;
+	transition: all 0.5s;
+}
+div.azrcrv-b-arrowbreadcrumbs a:hover, div.azrcrv-b-arrowbreadcrumbs a.active,
+div.azrcrv-b-arrowbreadcrumbs a:hover:after, div.azrcrv-b-arrowbreadcrumbs a.active:after,
+div.azrcrv-b-arrowbreadcrumbs a:not(:first-child):not(:last-child):hover {
+	background: #007FFF;
+	color: #FFF;
+}

@@ -1,0 +1,174 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Breadcrumbs 2.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-12 00:00+0000\n"
+"PO-Revision-Date: 2026-08-12 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: translate@azurecurve.co.uk\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: azurecurve PRD-driven rewrite\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__;esc_html_e;esc_attr__;esc_attr_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/functions-menu.php:34 includes/tabs-output.php:21
+msgid "Settings"
+msgstr ""
+
+#: includes/functions-menu.php:48
+msgid "Breadcrumbs Settings"
+msgstr ""
+
+#: includes/functions-menu.php:49
+msgid "Breadcrumbs"
+msgstr ""
+
+#: includes/functions-settings.php:38
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/functions-settings.php:66
+msgid "Settings saved."
+msgstr ""
+
+#: includes/functions-settings.php:67
+msgid "Security check failed - please try again."
+msgstr ""
+
+#: includes/functions-settings.php:172
+msgid "You do not have permissions to perform this action."
+msgstr ""
+
+#: includes/tab-instructions.php:19 includes/tabs-output.php:22
+msgid "Instructions"
+msgstr ""
+
+#: includes/tab-instructions.php:21
+msgid "This plugin creates a breadcrumb trail for posts, pages and other public post types, in either a plain-text or arrow style."
+msgstr ""
+
+#: includes/tab-instructions.php:24
+msgid "Open the Settings tab to choose whether breadcrumbs appear before and/or after the content, whether the homepage is included in the trail, and the separator used for text-style breadcrumbs."
+msgstr ""
+
+#: includes/tab-instructions.php:25
+msgid "To place breadcrumbs anywhere else on the page, use the shortcode or theme function described below."
+msgstr ""
+
+#: includes/tab-instructions.php:28
+msgid "Shortcode"
+msgstr ""
+
+#: includes/tab-instructions.php:33
+#, php-format
+msgid "%1$s or %2$s can be added anywhere to place breadcrumbs in the desired location."
+msgstr ""
+
+#: includes/tab-instructions.php:40
+msgid "Theme function"
+msgstr ""
+
+#: includes/tab-instructions.php:48
+msgid "Backward compatibility for those migrating from WordPress to ClassicPress is maintained by also providing an azc_b_getbreadcrumbs() function, which behaves identically."
+msgstr ""
+
+#: includes/tab-instructions.php:51
+msgid "Styling"
+msgstr ""
+
+#: includes/tab-other-plugins.php:41
+msgid "Other Plugins"
+msgstr ""
+
+#: includes/tab-other-plugins.php:50
+#, php-format
+msgid "%1$s was one of the first plugin developers to start developing for ClassicPress; all plugins are available from %2$s and are integrated with the %3$s plugin for fully integrated, no hassle, updates."
+msgstr ""
+
+#: includes/tab-other-plugins.php:53
+#, php-format
+msgid "Other plugins available from %s, which you are not using, are:"
+msgstr ""
+
+#: includes/tab-settings.php:24
+msgid "Breadcrumbs allows the display of breadcrumbs before and after the title and content."
+msgstr ""
+
+#: includes/tab-settings.php:34
+msgid "Show on homepage"
+msgstr ""
+
+#: includes/tab-settings.php:37
+msgid "Show on Homepage"
+msgstr ""
+
+#: includes/tab-settings.php:40
+msgid "Shows breadcrumbs on the homepage."
+msgstr ""
+
+#: includes/tab-settings.php:44
+msgid "Add homepage"
+msgstr ""
+
+#: includes/tab-settings.php:47
+msgid "Add Homepage"
+msgstr ""
+
+#: includes/tab-settings.php:50
+msgid "Adds homepage to the breadcrumb trail."
+msgstr ""
+
+#: includes/tab-settings.php:54
+msgid "Breadcrumbs Before Content"
+msgstr ""
+
+#: includes/tab-settings.php:57 includes/tab-settings.php:68
+msgid "None"
+msgstr ""
+
+#: includes/tab-settings.php:58 includes/tab-settings.php:69
+msgid "Text"
+msgstr ""
+
+#: includes/tab-settings.php:59 includes/tab-settings.php:70
+msgid "Arrow"
+msgstr ""
+
+#: includes/tab-settings.php:61
+msgid "Shows breadcrumbs before the content of a post, page or other public post type."
+msgstr ""
+
+#: includes/tab-settings.php:65
+msgid "Breadcrumbs After Content"
+msgstr ""
+
+#: includes/tab-settings.php:72
+msgid "Shows breadcrumbs after the content of a post, page or other public post type."
+msgstr ""
+
+#: includes/tab-settings.php:76
+msgid "Text Breadcrumbs Separator"
+msgstr ""
+
+#: includes/tab-settings.php:83
+#, php-format
+msgid "Character(s) to show between text breadcrumbs (for example %1$s or %2$s)."
+msgstr ""
+
+#: includes/tab-settings.php:94
+msgid "Save Settings"
+msgstr ""
+
+#: includes/tabs-output.php:76
+msgid "Support"
+msgstr ""
+
+#: includes/tabs-output.php:85
+msgid "You can help support the development of our free plugins by donating a small amount of money."
+msgstr ""
